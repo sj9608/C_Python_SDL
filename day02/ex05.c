@@ -26,7 +26,7 @@ int main()
     }
         else if (opr == '%')
     {
-        printf("Result : %d %% %d = %d", a, b, a / b);
+        printf("Result : %d %% %d = %d.", a, b, a / b);
     }
 
     return 0;
