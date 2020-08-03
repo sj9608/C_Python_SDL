@@ -13,9 +13,12 @@ git push -u origin master
 git remote add origin https://github.com/sneak7581/git_test.git
 git push -u origin master
 ```
+<<<<<<< HEAD
 
 # Today Learning
   반복문
   makefile 문법
   이름 : 소스파일리스트 (공백으로 구분)
   $@ 이름 $<
+=======
+>>>>>>> 96042eaede8890e6c0a9451eb285cc288d8f667f
