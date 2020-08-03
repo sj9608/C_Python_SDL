@@ -1,3 +1,4 @@
+//10진수 --> 2진수 변환
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
