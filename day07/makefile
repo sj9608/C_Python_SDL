@@ -17,7 +17,6 @@ ex08 : ex08.c
 ex09 : ex09.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex10 : ex10.c
-<<<<<<< HEAD
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex11 : ex11.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
@@ -28,6 +27,4 @@ ex13 : ex13.c
 ex14 : ex14.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex15 : ex15.c
-=======
->>>>>>> 0ea7206101b56f86e554052ab4d995974cf55f9c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2

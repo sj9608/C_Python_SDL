@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Today AM Learning
-=======
-# Today Learning
->>>>>>> 0ea7206101b56f86e554052ab4d995974cf55f9c
 
 ## 변수설명
 함수내에 전역변수에 종속되지 않도록 하는게 이상적인 함수이다.\
@@ -17,13 +13,18 @@
 01. extern  : 외부 공개
 02. static  : 외부 비공개 (전역 메모리 공간 할당)\
 static 변수를 사용하면 C 언어를 객체지향적으로 잘 사용할 수 있다.
-<<<<<<< HEAD
 
 # PM Learning
 ## 배열과 문자열
 
 
 # 과제
-
-=======
->>>>>>> 0ea7206101b56f86e554052ab4d995974cf55f9c
+``` C
+char data[] = "kor, mat, eng, bio, pyh, earth";
+// data의 배열을 , 단윌 끊어서 각각 버퍼에 따로 저장하고 출력
+char buf1[16];
+char buf2[16];
+char buf3[16];
+char buf4[16];
+char buf5[16];
+char buf6[16];
