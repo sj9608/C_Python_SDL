@@ -28,3 +28,5 @@ ex14 : ex14.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex15 : ex15.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+homework : homework.c
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2

@@ -28,3 +28,7 @@ char buf3[16];
 char buf4[16];
 char buf5[16];
 char buf6[16];
+```
+
+# 파이썬
+자료형 : 리스트, 튜플, 딕셔너리 
