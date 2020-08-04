@@ -1,6 +1,12 @@
- ex04 : ex04.c 
+ ex01 : ex01.c 
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
-ex05 : ex05.c
+ ex02 : ex02.c 
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+ ex03 : ex03.c 
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+ ex04 : ex04.c sum.c
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+ ex05 : ex05.c sum.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex06 : ex06.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
@@ -13,10 +19,12 @@ ex09 : ex09.c
 ex10 : ex10.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex11 : ex11.c
-	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_Image
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex12 : ex12.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex13 : ex13.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex14 : ex14.c
+	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
+ex15 : ex15.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
