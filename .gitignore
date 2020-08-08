@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,c
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,c
 
+# Folder #
+c_lecture/
+
 ### C ###
 # Prerequisites
 *.d
@@ -189,3 +192,4 @@ dmypy.json
 .pytype/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,c
+c_lecture
