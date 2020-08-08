@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     {
     case '1':
     //lee,80,70,85
-      printf("input score [name,kor,eng,math] \n");
+      printf("input score [name kor eng math] \n");
       {
         char _tokenBuffer[32][8];
         int _tokenIndex = 0;
@@ -49,7 +49,8 @@ int main(int argc, char *argv[])
           }
           else 
           {
-            _tokenBuffer[_tokenIndex][_index++] = _c;
+            _tokenBuffer[_tokenIndex][_index] = _c;
+            _index++;
           }
 
         } while(_c != '\n');
