@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
     for (int iy = 0; iy < 8; iy++)
     {
-      for (int ix = 0; ix < 8; ix++)
+      for (int ix = 0; ix < 10; ix++)
       {
         SDL_Rect src = {16 * 6, 16 * 1, 16, 16};
         SDL_Rect dest = {ix * 64, iy * 64, 64, 64};
