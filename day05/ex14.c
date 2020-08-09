@@ -1,6 +1,19 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+// Select tile (x, y)
+SDL_Rect _select_source_tile(int x, int y)
+{
+    SDL_Rect _src = {16 * x, 16 * y, 16, 16};
+    return _src;
+}
+
+SDL_Rect _put_tile_destination(int x, int y)
+{
+    SDL_Rect _dst = {(16 * x) * 4, (16 * y) * 4, 16 * 4, 16 * 4};
+    return _dst;
+}
+
 int main(int argc, char *argv[])
 {
     if (SDL_Init(SDL_INIT_VIDEO) == 0)
@@ -31,334 +44,25 @@ int main(int argc, char *argv[])
 
                 SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
                 SDL_RenderClear(renderer);
-
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
-            { // 0행
-                {// 0, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
+                { // Base Tiles
+                    // 8, 0 tiles select
+                    SDL_Rect _srcRt = _select_source_tile(0, 8);
 
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 0;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
+                    for (int _Width = 0; _Width < 10; _Width++)
+                    {
+                        for (int _Height = 0; _Height < 8; _Height++)
+                        {
+                            SDL_Rect _dstRt = _put_tile_destination(_Width, _Height);
 
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
+                            SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
+                        }
+                    }
                 }
 
-                {// 1, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
+                // 5, 1 tiles select
 
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 1;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 2, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 2;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 3, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 3;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-                {// 4, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 4;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 5, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 5;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 6, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 6;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 7, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 7;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 8, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 8;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 9, 0
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 9;
-                    _dstRt.y = 16 * 4 * 0;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-            }
-            //0행 끝
-
-            { // 1행
-                {// 0, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 0;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 1, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 1;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 2, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 2;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 3, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 3;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 4, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 4;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 5, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 5;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 6, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 6;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 7, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 7;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 8, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 8;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-
-                {// 9, 1
-                    SDL_Rect _srcRt;
-                    _srcRt.x = 0;
-                    _srcRt.y = 16 * 8;
-                    _srcRt.w = 16;
-                    _srcRt.h = 16;
-
-                    SDL_Rect _dstRt;
-                    _dstRt.x = 16 * 4 * 9;
-                    _dstRt.y = 16 * 4 * 1;
-                    _dstRt.w = 16*4;
-                    _dstRt.h = 16*4;
-
-                    SDL_RenderCopy(renderer, tex, &_srcRt, &_dstRt);
-                }
-            }
-
-            
                 SDL_RenderPresent(renderer);
 
                 while (SDL_PollEvent(&event))
