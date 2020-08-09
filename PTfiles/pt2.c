@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
             SDL_Rect dst = {ix * 64, iy * 64, 64, 64};
             SDL_RenderCopy(gRenderer, tex, &src, &dst);
         }
+        SDL_RenderPresent(gRenderer);
     }
     SDL_DestroyWindow(gWindow);
 
