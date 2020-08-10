@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 
-short _sum_Even(short _data[], int _dataSize)
+short _sum_Even(short _data[], int _ArrayLength)
 {
     int rst = 0;
 
-    for (int i = 0; i < _dataSize; i += 2)
+    for (int i = 0; i < _ArrayLength; i += 2)
     {
         rst += _data[i];
     }
@@ -15,11 +15,11 @@ short _sum_Even(short _data[], int _dataSize)
 }
 
 // 287p. Q3) data 배열의 각 요소에 저장된 갑 중에서 가장 큰 값을 찾는 코드를 작성해 보세요.
-short _find_Max(short _data[], int _dataSize)
+short _find_Max(short _data[], int _ArrayLength)
 {
     int _MAX = 0;
 
-    for (int i = 0; i < _dataSize; i++)
+    for (int i = 0; i < _ArrayLength; i++)
     {
         if (_MAX < _data[i])
         {
@@ -34,7 +34,8 @@ void main()
 {
     short data[9] = {4, 6, 9, 8, 7, 2, 5, 1, 3};
     int _arraySize = sizeof(data) / sizeof(*data);
-    printf("size of data is : %d\n", sizeof(data)); // short data has 2byte So 9 arrays have 2 * 9 = 18 bytes
+
+    //printf("size of data is : %d\n", sizeof(data)); // short data has 2byte So 9 arrays have 2 * 9 = 18 bytes
     printf("Sum_EvenIndexValue in data is %d \n", _sum_Even(data, _arraySize)); // expect value is 27
     printf("MAX value in data is : %d \n",_find_Max(data, _arraySize)); // expect value is 9
 }
