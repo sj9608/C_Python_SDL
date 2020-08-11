@@ -1,0 +1,3 @@
+lee seung jun,40,50,60
+song gang ho,60,70,50
+bong jun ho,90,30,40

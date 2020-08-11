@@ -9,7 +9,7 @@ int doTokenize(char *szBuf, char szBufToken[8][MAX_TOKEN_SIZE])
   //[change,10]
   char *szpTemp;
   char *pNextToken = NULL;
-  const char *pszDelimiter = " ";
+  const char *pszDelimiter = " "; // seperator
   szpTemp = strtok(szBuf, pszDelimiter);
 
   int _nTokenIndex = 0;
