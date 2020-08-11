@@ -17,6 +17,11 @@ Uint16 g_nSelectTileIndex = 0;
 
 int main(int argc, char *argv[])
 {
+    for (int i = 0; i < 64; i++)
+    {
+        g_worldMap_Layer_1[i] = -1;
+    }
+
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -35,6 +40,7 @@ int main(int argc, char *argv[])
     }
 
     g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, SDL_RENDERER_ACCELERATED);
+
     {
         SDL_Surface *pSurface;
         pSurface = IMG_Load("../../res/tiny16/dungeontiles.png");
@@ -53,10 +59,10 @@ int main(int argc, char *argv[])
         putTile(g_pRenderer, g_pTileSet, 16, 1, g_nSelectTileIndex);
 
         // 440, 100
-        { // 팔레트 렌더링
+        {
+            // 팔레트 렌더링
             SDL_Rect dstRect = {440, 100, 48 * 4, 72 * 4};
             SDL_RenderCopy(g_pRenderer, g_pTileSet, NULL, &dstRect);
-            SDL_RenderPresent(g_pRenderer);
         }
 
         // render world map
@@ -71,6 +77,8 @@ int main(int argc, char *argv[])
             }
         }
 
+        SDL_RenderPresent(g_pRenderer);
+
         SDL_Event _event;
         while (SDL_PollEvent(&_event))
         {
@@ -83,9 +91,12 @@ int main(int argc, char *argv[])
             break;
             case SDL_MOUSEBUTTONDOWN:
             {
+                printf("%8d\r", _event.button.button);
                 if (_event.button.button == 1) // left click
                 {
-                    {                                          // 팔레트 처리
+                    
+                    // 팔레트 처리
+                    {                                          
                         int _x = (_event.motion.x - 440) / 32; // 타일의 x 인덱스
                         int _y = (_event.motion.y - 100) / 32; //
 
@@ -93,24 +104,35 @@ int main(int argc, char *argv[])
                         {
                             g_nSelectTileIndex = _y * 6 + _x;
                         }
-                        printf("%4d%4d\r", _x, _y);
+
+                        //printf("%4d%4d\r", _x, _y);
                     }
                     //월드맵처리
                     {
-                        int _x = (_event.motion.x - 440) / 32;
-                        int _y = (_event.motion.y - 100) / 32;
-                        
-                        if(_x<8 && _y<8)
+                        int _x = (_event.motion.x) / 32;
+                        int _y = (_event.motion.y) / 32;
+
+                        if (_x < 8 && _y < 8)
                         {
-                        int _tileIndex = _y*6 + _x;
-                        g_worldMap_Layer_1[_tileIndex] = g_nSelectTileIndex;
-                        printf("%4d%4d%4d\r",_x, _y,_tileIndex);
+                            int _tileIndex = _y * 8 + _x;
+                            //printf("%8d \r",_tileIndex);
+                            g_worldMap_Layer_1[_tileIndex] = g_nSelectTileIndex;
+                            printf("%4d%4d%4d\r", _x, _y, _tileIndex);
                         }
                     }
                 }
-                else if(_event.button.button == 2)
+                else if (_event.button.button == 3) // right click
                 {
+                    {
+                        int _x =(_event.motion.x) / 32;
+                        int _y = (_event.motion.y) / 32;
 
+                        if(_x < 8 && _y<8)
+                        {
+                            int _tileIndex = _y * 8 + _x;
+                            g_worldMap_Layer_1[_tileIndex] = -1;
+                        }
+                    }
                 }
             }
             break;
