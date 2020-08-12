@@ -7,12 +7,18 @@
 // const int  STUDENT_MAX = 1000;
 #define STUDENT_MAX 1000
 
+typedef struct 
+{
 int score[STUDENT_MAX][3]; //성적
 char name[STUDENT_MAX][8]; //이름
+} StudentInfo;
+
+
 int tail_Index = -1;
 
 int main()
 {
+  StudentInfo _student;
 
   bool bLoop = true;
   while (bLoop)
@@ -42,6 +48,7 @@ int main()
         char _c;
         do {
           _c = getchar();
+          rewind(stdin);
           
           if(_c == ' ') {  //02. ' '만나면 토큰인덱스 0번에 입력마치고(배열의 마지막에 0값 넣어줌) 토큰인덱스 올리고 인덱스0초기화해서 국어점수값 받을준비 반복하다가
             _tokenBuffer[_tokenIndex][_index] = 0x00;
@@ -59,10 +66,10 @@ int main()
         printf("%s %s %s %s \n",_tokenBuffer[0],_tokenBuffer[1],_tokenBuffer[2],_tokenBuffer[3]); //입력이 완료된 버퍼의 값들을 출력(확인용도)
         
         tail_Index++; // tail index값 증가시켜줘서 다음학생 정보 입력받을준비
-        strcpy(name[tail_Index],_tokenBuffer[0]);
-        score[tail_Index][0] = atoi(_tokenBuffer[1]);
-        score[tail_Index][1] = atoi(_tokenBuffer[2]);
-        score[tail_Index][2] = atoi(_tokenBuffer[3]);
+        strcpy(_student.name[tail_Index],_tokenBuffer[0]);
+        _student.score[tail_Index][0] = atoi(_tokenBuffer[1]);
+        _student.score[tail_Index][1] = atoi(_tokenBuffer[2]);
+        _student.score[tail_Index][2] = atoi(_tokenBuffer[3]);
 
         //bLoop = SDL_FALSE;
       }
@@ -72,7 +79,7 @@ int main()
         printf("---------------------------\n");
         for(int i=0;i<=tail_Index;i++)
         {
-          printf("%8s%4d%4d%4d\n",name[i],score[i][0],score[i][1],score[i][2]);
+          printf("%8s%4d%4d%4d\n",_student.name[i],_student.score[i][0],_student.score[i][1],_student.score[i][2]);
         }
         printf("press any key......");
         getchar();
