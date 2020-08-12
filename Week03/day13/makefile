@@ -16,3 +16,7 @@ ex08 : ex08.c ../../engine/button.c ../../engine/util.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 ex09 : ex09.c ../../engine/button.c ../../engine/util.c
 	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+ex08-2 : ex08-2.c button.c util.c
+	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+pt1 : pt1.c
+	gcc -o $@ $^
