@@ -14,4 +14,6 @@ typedef struct _S_BUTTON
 void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID, void (*m_pCallbackBtnPush)(struct _S_BUTTON *));
 void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRenderer);
 void Button_DoEvent(S_BUTTON *pBtn, SDL_Event *pEvt);
+S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID, void (*pCallbackBtnPush)(struct _S_BUTTON *));
+void destroyButton(S_BUTTON *pBtn);
 #endif

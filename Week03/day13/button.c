@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
 #include "button.h"
 #include "util.h"
 
@@ -22,6 +23,20 @@ void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
     pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
 
     pBtn->m_nID = btnID;
+}
+
+S_BUTTON *createButton(int x, int y, int w, int h, Uint16 btnID,
+  void (*pCallbackBtnPush)(struct _S_BUTTON *))
+{
+    S_BUTTON *pBtn ;
+    pBtn = SDL_malloc(sizeof(S_BUTTON));
+
+    return pBtn;
+}
+
+void destroyButton(S_BUTTON *pBtn)
+{
+    free(pBtn);
 }
 
 void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRenderer)
