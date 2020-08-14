@@ -2,38 +2,23 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+
+#include "ui_base.h"
 #include "button.h"
-#include "util.h"
 
-// extern SDL_bool bLoop;
-void Button_Init(S_BUTTON *pBtn, int x, int y, int w, int h, Uint16 btnID,
-                 void (*pCallbackBtnPush)(struct _S_BUTTON *))
+static void _destory(void *pObj)
 {
-  // pBtn->bCheckHitRect = SDL_FALSE;
-  pBtn->m_bVisible = SDL_TRUE;
-  pBtn->m_nFSM = 0;
-  pBtn->m_Rect.x = x;
-  pBtn->m_Rect.y = y;
-  pBtn->m_Rect.w = w;
-  pBtn->m_Rect.h = h;
+  S_BUTTON *pBtn = pObj;
 
-  pBtn->m_fillColor.r = 0xff;
-  pBtn->m_fillColor.g = 0;
-  pBtn->m_fillColor.b = 0;
-  pBtn->m_fillColor.a = 0;
-  pBtn->m_pCallbackBtnPush = pCallbackBtnPush;
-  pBtn->m_nID = btnID;
-}
-
-void destoryButton(S_BUTTON *pBtn)
-{
   SDL_DestroyTexture(pBtn->m_pLable);
   SDL_free(pBtn);
 }
 
-void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRender)
+static void _render(void *pObj, SDL_Renderer *pRender)
 {
-  if (pBtn->m_bVisible)
+  S_BUTTON *pBtn=pObj;
+
+  if (pBtn->m_base.m_bVisible)
   {
     //반투명 모드 활성화
     SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_BLEND);
@@ -57,17 +42,20 @@ void Button_Render(S_BUTTON *pBtn, SDL_Renderer *pRender)
   }
 }
 
-void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
+static void _doEvent(void *pObj, SDL_Event *pEvt)
 {
+  S_BUTTON *pBtn = pObj;
+
   SDL_Point mousePos;
   mousePos.x = pEvt->motion.x;
   mousePos.y = pEvt->motion.y;
+
   if (pBtn->m_nFSM == 0)
   {
     switch (pEvt->type)
     {
     case SDL_MOUSEMOTION:
-      if (SDL_PointInRect(&pBtn->m_Rect, &mousePos))
+      if (SDL_PointInRect(&mousePos,&pBtn->m_Rect))
       {
         pBtn->m_fillColor.a = 0x80;
         pBtn->m_nFSM = 1;
@@ -77,18 +65,17 @@ void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
   }
   else if (pBtn->m_nFSM == 1) //사각형 내부진입상태
   {
-
     switch (pEvt->type)
     {
     case SDL_MOUSEMOTION:
-      if (!SDL_PointInRect(&pBtn->m_Rect,&mousePos))
+      if (!SDL_PointInRect(&mousePos,&pBtn->m_Rect) )
       {
         pBtn->m_fillColor.a = 0xff;
         pBtn->m_nFSM = 0;
       }
       break;
     case SDL_MOUSEBUTTONDOWN:
-      if (SDL_PointInRect(&pBtn->m_Rect,&mousePos))
+      if (SDL_PointInRect(&mousePos,&pBtn->m_Rect))
       {
         if (pBtn->m_pCallbackBtnPush != NULL)
         {
@@ -100,7 +87,7 @@ void _doEvent(S_BUTTON *pBtn, SDL_Event *pEvt)
   }
 }
 
-S_BUTTON *createButton(SDL_Renderer *pRenderer,
+S_BUTTON *myui_createButton(SDL_Renderer *pRenderer,
                        int x, int y, int w, int h, Uint16 btnID,
                        const Uint16 *text,
                        TTF_Font *pFont,
@@ -109,16 +96,20 @@ S_BUTTON *createButton(SDL_Renderer *pRenderer,
   S_BUTTON *pBtn;
   pBtn = SDL_malloc(sizeof(S_BUTTON));
 
-  pBtn->m_nType = 2;
+  pBtn->m_base.m_nType = MYUI_BUTTON;
+  pBtn->m_base.m_nID = btnID;
+  pBtn->m_base.m_bVisible = SDL_TRUE;
+
+  pBtn->m_base.m_fpRender = _render;
+  pBtn->m_base.m_fpDestory = _destory;
+  pBtn->m_base.m_fpDoEvent = _doEvent;
 
   pBtn->m_Rect.x = x;
   pBtn->m_Rect.y = y;
   pBtn->m_Rect.w = w;
   pBtn->m_Rect.h = h;
 
-  pBtn->m_nID = btnID;
   pBtn->m_nFSM = 0;
-  pBtn->m_bVisible = SDL_TRUE;
 
   pBtn->m_fillColor.r = 0x80;
   pBtn->m_fillColor.g = 0x80;
@@ -141,10 +132,6 @@ S_BUTTON *createButton(SDL_Renderer *pRenderer,
 
     SDL_FreeSurface(textSurface);
   }
-
-  pBtn->m_fpRender = Button_Render;
-  pBtn->m_fpDestory = destoryButton;
-  pBtn->m_fpDoEvent = _doEvent;
-
+  
   return pBtn;
 }
