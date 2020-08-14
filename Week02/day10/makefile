@@ -16,7 +16,7 @@ ex08 : ex08.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
 ex09 : ex09.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2
-ex10 : ex10.c ../engine/parser.c ../engine/tile.c
+ex10 : ex10.c ../../engine/parser.c ../../engine/tile.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 ex11 : ex11.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2

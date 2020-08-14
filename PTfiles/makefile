@@ -28,3 +28,6 @@ pt14 : pt14.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 pt15 : pt15.c
 	gcc -o $@.exe $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+
+Maptool : Maptool.c tile.c
+	gcc -o $@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
