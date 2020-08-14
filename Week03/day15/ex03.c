@@ -14,6 +14,7 @@ const Uint16 WINDOW_HEIGHT = 480;
 SDL_Window *g_pWindow;
 SDL_Renderer *g_pRenderer;
 TTF_Font *g_pFont;
+
 S_TextLable *g_pLabelMainmenu;
 S_BUTTON *g_pBtnExit;
 S_INPUT_TEXT *g_pInputText;
@@ -57,15 +58,16 @@ int main(int argc, char *argv[])
     g_pBtnExit = myui_createButton(g_pRenderer, 0, 40, 120, 50, 1, L"나가기", g_pFont, onPushExitButton);
 
     SDL_Color _fg = {0xff, 0xff, 0xff, 0xff};
-    SDL_Color _bg = {0xff, 0xff, 0xff, 0xff};
+    SDL_Color _bg = {0x80,0x80,0x80,0xff};
     
-    g_pInputText = myuiCreateInputText(g_pRenderer, 0, 60, 196, 32, 3, g_pFont, &_fg, &_bg);
+    g_pInputText = myui_createInputText(g_pRenderer, 0, 96, 196, 32, 3, g_pFont, _fg, _bg);
 
     SDL_bool bLoop = SDL_TRUE;
     while (bLoop)
     {
         SDL_SetRenderDrawColor(g_pRenderer, 0x00, 0x00, 0xff, 0xff);
         SDL_RenderClear(g_pRenderer);
+
         g_pLabelMainmenu->m_base.m_fpRender(g_pLabelMainmenu, g_pRenderer);
         g_pBtnExit->m_base.m_fpRender(g_pBtnExit, g_pRenderer);
         g_pInputText->m_base.m_fpRender(g_pInputText, g_pRenderer);
@@ -76,10 +78,11 @@ int main(int argc, char *argv[])
         while (SDL_PollEvent(&_event))
         {
             g_pBtnExit->m_base.m_fpDoEvent(g_pBtnExit, &_event);
+            g_pInputText->m_base.m_fpDoEvent(g_pInputText, &_event);
             switch (_event.type)
             {
             case SDL_KEYDOWN:
-                printf("%d \n", _event.key.keysym.scancode);
+                // printf("%d \n", _event.key.keysym.scancode);
                 break;
             case SDL_QUIT:
                 bLoop = SDL_FALSE;

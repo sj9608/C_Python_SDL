@@ -4,7 +4,7 @@
 enum{
     MYUI_TEXT_LABLE = 1,
     MYUI_BUTTON,
-    MYUI_TEXTINPUT,
+    MYUI_TEXT_INPUT,
     MYUI_CHECK_BUTTON
 };
 typedef struct ui_base
