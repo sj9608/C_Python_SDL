@@ -20,12 +20,23 @@ static void _doEvent(void *pObj, SDL_Event *pEvt)
     switch (pEvt->type)
     {
     case SDL_MOUSEBUTTONDOWN:
-        if(pEnty->m_callbackMouseDown)
+        if (pEnty->m_callbackMouseDown)
         {
-            pEnty->m_callbackMouseDown(pEnty);
+            SDL_Point mspt = {pEnty->m_ptPos.x, pEnty->m_ptPos.y};
+            SDL_Rect bodyRect = {
+                pEnty->m_srcRect.x,
+                pEnty->m_srcRect.y,
+                pEnty->m_srcRect.w,
+                pEnty->m_srcRect.h,
+            };
+            
+            if (SDL_PointInRect(&mspt, &bodyRect))
+            {
+                pEnty->m_callbackMouseDown(pEnty);
+            }
         }
         break;
-    
+
     default:
         break;
     }

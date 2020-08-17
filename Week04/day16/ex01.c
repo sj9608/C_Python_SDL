@@ -8,6 +8,7 @@ void callBackFreeAll(void *pNode, void *param)
 void callBackTraverse(void *pNode, void *param)
 {
     tDE_S_Node *_pnode = pNode;
+    
     printf("%4d\n", _pnode->m_nID);
 }
 

@@ -64,6 +64,7 @@ void tDE_graph_Traverse(tDE_S_Node *pRoot, void (*callback)(void *node, void *pt
             _phead = _next;
         }
     }
+    return;
 }
 
 tDE_S_Node *tDE_graph_FindNodeById(tDE_S_Node *pRoot, Uint32 nId)
@@ -119,8 +120,8 @@ void tDE_graph_remove_node(tDE_S_Node *pNode)
         {
             pNode->m_pParent = prev; // 예외처리
         }
-        else
-            pNode->m_pParent->m_pChild = NULL;
+
     }
+    return;
 }
     
