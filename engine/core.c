@@ -43,6 +43,7 @@ tDE_S_Core *tDE_setup_1(const char *szTitle,
     printf("engine start at %8d\n",time(NULL));
     srand(time(NULL));
 
+    return pCore;
 }
 
 void tDE_closeCore(tDE_S_Core *pCore)
@@ -54,10 +55,10 @@ void tDE_closeCore(tDE_S_Core *pCore)
 
 SDL_Texture *tDE_util_loadTexture(tDE_S_Core *pCore, const char *filename)
 {
-    SDL_Surface *pSurface;
-    pSurface = IMG_Load(filename);
+    SDL_Surface *surface;
+    surface = IMG_Load(filename);
 
-    if(pSurface == NULL)
+    if(surface == NULL)
     {
         printf("file load error : %s\n",SDL_GetError());
         return NULL;
@@ -66,8 +67,8 @@ SDL_Texture *tDE_util_loadTexture(tDE_S_Core *pCore, const char *filename)
     {
         printf("IMG file Load Success\n");
     }
-    SDL_Texture *pTex = SDL_CreateTextureFromSurface(pCore->m_pRender, pSurface);
-    SDL_FreeSurface(pSurface);
+    SDL_Texture *pTex = SDL_CreateTextureFromSurface(pCore->m_pRender, surface);
+    SDL_FreeSurface(surface);
 
     return pTex;
     

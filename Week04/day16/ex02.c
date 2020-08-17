@@ -48,10 +48,12 @@ void mouseDownCallback(void *ptr)
 
 int main(int argc, char *argv[])
 {
+    tDE_graph_init();
+
     tDE_S_Core *pEngineCore = tDE_setup_1("example2", 640, 480, 0);
     SDL_Texture *pSprTex = tDE_util_loadTexture(pEngineCore, "../../res/tanks/sheet_tanks.png");
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1; i++)
     {
         tDE_S_ObjectBase *pSprEntity = tDE_Entity_createSprite(rand() % 600, rand() % 480, 0,
                                                                g_sheet_rects[0], pSprTex,
@@ -70,7 +72,7 @@ int main(int argc, char *argv[])
         SDL_RenderClear(pEngineCore->m_pRender);
 
         // pSpr->m_fpRender(pSpr, pEngineCore->m_pRender);
-        tDE_graph_Traverse(NULL, NULL, NULL);
+        tDE_graph_Traverse(NULL, callBack_render, NULL);
 
         SDL_RenderPresent(pEngineCore->m_pRender);
 
@@ -81,7 +83,6 @@ int main(int argc, char *argv[])
             switch (_event.type)
             {
             case SDL_MOUSEBUTTONDOWN:
-                printf("%4d", 4);
                 break;
             case SDL_QUIT:
                 bLoop = SDL_FALSE;
@@ -96,6 +97,7 @@ int main(int argc, char *argv[])
 
     SDL_DestroyTexture(pSprTex);
     tDE_closeCore(pEngineCore);
+
     tDE_graph_close();
 
     return 0;
