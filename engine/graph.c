@@ -72,8 +72,55 @@ tDE_S_Node *tDE_graph_FindNodeById(tDE_S_Node *pRoot, Uint32 nId)
     {
         pRoot = g_pRootNode;
     }
-    if (pRoot->m_nID == nId)
+    if (pRoot->m_pChild) // child 있으면 계속 찾기
     {
-        
+        void *_pNode = tDE_graph_FindNodeById(pRoot->m_pChild, nId);
+
+        if (_pNode)
+            return _pNode;
+        else
+        {
+            tDE_S_Node *pHead = pRoot->m_pChild;
+            while (pHead)
+            {
+                void *next = pHead->m_pNext;
+                if (pHead->m_nID == nId)
+                    return pHead;
+                pHead = next;
+            }
+        }
+    }
+
+    return NULL;
+}
+
+void tDE_graph_remove_node(tDE_S_Node *pNode)
+{
+
+    tDE_S_Node *prev = pNode->m_pPrev;
+    tDE_S_Node *next = pNode->m_pNext;
+
+    if (!prev) // 헤더 (앞뒤 없음)
+    {
+        if (next)
+        {
+            pNode->m_pParent->m_pChild = next;
+            next->m_pPrev = NULL;
+        }
+        else //( next = NULL)
+        {
+            pNode->m_pParent->m_pChild = NULL;
+        }
+    }
+    else
+    {
+        prev->m_pNext = next;
+        if(next) // 맨 마지막인지 검사 
+        {
+            pNode->m_pParent = prev; // 예외처리
+        }
+        else
+            pNode->m_pParent->m_pChild = NULL;
     }
 }
+    

@@ -10,4 +10,26 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
+typedef struct __core
+{
+    SDL_Window *m_pWin;
+    SDL_Renderer *m_pRender;
+    TTF_Font *m_pDefaultFont;
+    Uint16 m_ScreenWidth;
+    Uint16 m_ScreenHeight;
+
+} tDE_S_Core;
+
+typedef struct _tde_s_base_
+{
+    Uint16 m_nType;      // 엔티티 타입 정의
+    SDL_bool m_bvisible; // 화면에 보일지 말지
+    Uint32 m_nId;
+
+    void (*m_fpDestroy)(void *pObj);
+    void (*m_fpRender)(void *pObj, SDL_Renderer *pRender);
+    void (*m_fpDoEvent)(void *pObj, SDL_Event *pEvt);
+    void (*m_fpApply)(void *pObj, Uint32 tick);
+} tDE_S_ObjectBase;
+
 #endif

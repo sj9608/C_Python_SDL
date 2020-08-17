@@ -30,6 +30,11 @@ int main(int argc, char *argv[])
         printf("%d\n",pFindNode->m_nID);
     }
 
+    tDE_graph_remove_node(pFindNode);
+
+    printf("============================================\n");
+    tDE_graph_Traverse(NULL, callBackTraverse, NULL);
+    
     // SDL_free(pNode2);
     // SDL_free(pNode);
     tDE_graph_Traverse(NULL, callBackFreeAll, NULL);
