@@ -45,7 +45,35 @@ Uint32 tDE_graph_add_node(tDE_S_Node *pNode, tDE_S_Node *pParent) // 노드추�
     return pNode->m_nID;
 }
 
-void tDE_graph_Traverse(tDE_S_Node *pRoot, void (*callback)(void *node), void *param) // 노드를 만날때마다 콜백하기위한 함수 콜백함수 받아서 id값 출력해보고
+void tDE_graph_Traverse(tDE_S_Node *pRoot, void (*callback)(void *node, void *ptr), void *param) // 노드를 만날때마다 콜백하기위한 함수 콜백함수 받아서 id값 출력해보고
 {
-    
+    if (!pRoot)
+    {
+        pRoot = g_pRootNode;
+    }
+    // 자손찾기
+    if (pRoot->m_pChild)
+    {
+        tDE_graph_Traverse(pRoot->m_pChild, callback, param);
+        // 형제순회
+        tDE_S_Node *_phead = pRoot->m_pChild;
+        while (_phead)
+        {
+            void *_next = _phead->m_pNext;
+            callback(_phead, param);
+            _phead = _next;
+        }
+    }
+}
+
+tDE_S_Node *tDE_graph_FindNodeById(tDE_S_Node *pRoot, Uint32 nId)
+{
+    if (!pRoot)
+    {
+        pRoot = g_pRootNode;
+    }
+    if (pRoot->m_nID == nId)
+    {
+        
+    }
 }
