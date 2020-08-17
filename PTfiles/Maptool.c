@@ -55,13 +55,13 @@ int main(int argc, char *argv[])
         SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 1);
         SDL_RenderClear(g_pRenderer);
 
-        // 선택된 타일 파레트 위에 출력 x 위치 16 x 32 위치, y 위치 1 * 32 위치 , nSelecTileIndex의 rendercopy해서 나타내준다.
+        // 선택된 타일 이미지 팔레트 위에 출력 x 좌표 : 16 x 32 , y 좌표 : 1 * 32  , g_nSelectTileIndex를 rendercopy해서 나타내준다.
         putTile(g_pRenderer, g_pTileSet, 16, 1, g_nSelectTileIndex);
 
-        // 440, 100 위치에 팔레트를 렌더링 한다.
+        // 300, 100 위치에 팔레트를 렌더링 한다.
         {
             // 팔레트 렌더링 48 * 4 의 넓이와 72 * 4의 높이로 렌더링
-            SDL_Rect dstRect = {440, 100, 48 * 4, 72 * 4};
+            SDL_Rect dstRect = {300, 100, 128, 240 };
             SDL_RenderCopy(g_pRenderer, g_pTileSet, NULL, &dstRect);
         }
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
             {
             case SDL_MOUSEMOTION:
             {
-                printf("%4d%4d\r", _event.motion.x, _event.motion.y);
+                printf("%4d%4d\r", _event.motion.x, _event.motion.y); // 마우스 좌표 표시
             }
             break;
             case SDL_MOUSEBUTTONDOWN:
@@ -97,15 +97,15 @@ int main(int argc, char *argv[])
                     
                     // 팔레트 처리
                     {                                          
-                        int _x = (_event.motion.x - 440) / 16; // 타일의 x 인덱스
-                        int _y = (_event.motion.y - 100) / 16; //
+                        int _x = (_event.motion.x - 300) / 16; // 팔레트의 x 인덱스  (300,100 의 위치에 팔레트가 존재) (타일의 사이즈인 16크기로 나눠줌)
+                        int _y = (_event.motion.y - 100) / 16; // 팔레트의 y 인덱스
 
                         if ((_x >= 0 && _y >= 0) && (_x < 8 && _y < 15))
                         {
                             g_nSelectTileIndex = _y * 8 + _x;
                         }
 
-                        printf("%4d%4d\r", _x, _y);
+                        printf("%4d%4d\r", _x, _y); // 선택된 타일의 x,y 좌표 출력
                     }
                     //월드맵처리
                     {
