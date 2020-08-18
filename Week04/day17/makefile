@@ -18,3 +18,5 @@ ex02 : ex02.c ../../engine/core.c
 	gcc -g -o ../../out/$@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
 ex02-2 : ex02-2.c ../../engine/core.c
 	gcc -g -o ../../out/$@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf
+ex02-3 : ex02-3.c ../../engine/core.c
+	gcc -g -o ../../out/$@ $^ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf

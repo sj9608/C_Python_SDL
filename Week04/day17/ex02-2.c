@@ -2,6 +2,7 @@
 
 tDE_S_SheetData g_sheetDataAssets[1024];
 int g_select_SheetIndex = 0;
+float g_fAngle = 0;
 
 int main(int argc, char *argv[])
 {
@@ -43,11 +44,18 @@ int main(int argc, char *argv[])
         {
             Uint16 sheet_index = g_select_SheetIndex;
             SDL_Rect _destRt = {320 - g_sheetDataAssets[sheet_index].m_area.w / 2, // 물체 중심 가운데로 맞추기
-                                240 - g_sheetDataAssets[sheet_index].m_area.h/2,
+                                240 - g_sheetDataAssets[sheet_index].m_area.h / 2,
                                 g_sheetDataAssets[sheet_index].m_area.w,
                                 g_sheetDataAssets[sheet_index].m_area.h};
-            SDL_RenderCopy(pEngineCore->m_pRender, pTanksTex,
-                           &g_sheetDataAssets[sheet_index].m_area, &_destRt);
+
+            SDL_Point center = {0,0,};
+
+            SDL_RenderCopyEx(pEngineCore->m_pRender, pTanksTex,
+                             &g_sheetDataAssets[sheet_index].m_area,
+                             &_destRt, g_fAngle, &center, SDL_FLIP_NONE);
+
+            // SDL_RenderCopy(pEngineCore->m_pRender, pTanksTex,
+            //    &g_sheetDataAssets[sheet_index].m_area, &_destRt);
         }
 
         {
@@ -92,6 +100,14 @@ int main(int argc, char *argv[])
                 else if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
                 {
                     g_select_SheetIndex++;
+                }
+                else if(event.key.keysym.scancode == SDL_SCANCODE_UP)
+                {
+                    g_fAngle += 2;
+                }
+                else if(event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+                {
+                    g_fAngle -= 2;
                 }
                 break;
             case SDL_QUIT:

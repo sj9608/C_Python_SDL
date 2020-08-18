@@ -6,3 +6,20 @@
 ## ex01 예제  ###
 #### xml 데이터 시트안에 데이터를 적절하게 parsing 하는 예제.
 #### 하지만 메인함수내에서 구현함 --> 같은 기능을 하는 함수를 새로 생성
+
+## ex02
+### rendercopyex 사용해서 rotation을 줄 수 있으나 물체의 중심이 아니라 좌표값의 좌상단이 중심이 됌.
+
+### ex02-3 에서 고쳐볼예정
+
+
+다이나믹스, 동역학, 아래는 물리엔진의 기본이 된다.  
+``` C
+Uint32 _tick = SDL_GetTics(); // 정의
+  
+Uint32 _deltaTick = SDL_GetTics() - _tick;  
+_tick = SDL_GetTicks();  
+```
+``` C
+g_fAngle += (_deltaTick / 1000.0) * 45; // 1초에 45도돌아간다  
+```
