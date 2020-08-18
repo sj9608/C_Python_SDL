@@ -13,7 +13,6 @@ typedef struct __s_sheet_data
 
 void parseSheet(const char *szStr, _S_SheetData *pData)
 {
-    static char _szBuf[5][256];
     
 }
 
@@ -63,7 +62,11 @@ int main()
             strcpy(_szBuf[0], szToken + 1);   // char 형주소 1칸 만큼 뒤로간 값을 넣어줌 결과적으로 name 만 얻어진다.
             printf("%s\n", _szBuf);
 
+<<<<<<< HEAD
             // x parsing 현재 x값은  _szBuf[1] 에 들어가있음.
+=======
+            // x parsing 현재 _szBuf[1] 에 들어가있음.
+>>>>>>> bb16bdf4358789ba5604c55e0b2a1139e1342540
             szToken = strtok(_szBuf[1], "\"");
             szToken = strtok(NULL, "\"");
             printf("x:%d\n", atoi(szToken));
@@ -86,5 +89,8 @@ int main()
     }
 
     fclose(fp);
+<<<<<<< HEAD
     return 0;
+=======
+>>>>>>> bb16bdf4358789ba5604c55e0b2a1139e1342540
 }

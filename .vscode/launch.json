@@ -6,10 +6,17 @@
     "configurations": [
         
         {
+<<<<<<< HEAD
             "name": "ex02 debug",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\out\\ex02.exe",
+=======
+            "name": "ex01 debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\Week04\\day17\\ex01.exe",
+>>>>>>> bb16bdf4358789ba5604c55e0b2a1139e1342540
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\out",
