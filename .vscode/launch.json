@@ -6,13 +6,13 @@
     "configurations": [
         
         {
-            "name": "ex02 debug",
+            "name": "q1 debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\Week04\\day16\\ex02.exe",
+            "program": "${workspaceFolder}\\Week04\\day17\\q1.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\Week04\\day16",
+            "cwd": "${workspaceFolder}\\Week04\\day17",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
