@@ -13,7 +13,6 @@ typedef struct __s_sheet_data
 
 void parseSheet(const char *szStr, _S_SheetData *pData)
 {
-    static char _szBuf[5][256];
     
 }
 
