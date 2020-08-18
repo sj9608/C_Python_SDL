@@ -6,10 +6,10 @@
     "configurations": [
         
         {
-            "name": "q1 debug",
+            "name": "ex01 debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\Week04\\day17\\q1.exe",
+            "program": "${workspaceFolder}\\Week04\\day17\\ex01.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\Week04\\day17",
