@@ -1,5 +1,6 @@
 #include "../engine/core.h"
 #include "../engine/tile.h"
+#include "../engine/layer.h"
 #include "cmd_parser.h"
 
 tDE_S_Core *g_pEngineCore;
