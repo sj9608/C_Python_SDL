@@ -98,7 +98,7 @@ void parseCmd(char *_szCmd)
   }
   else if (strcmp(szTokens[0], "new") == 0)
   {
-    memset(g_worldMap_Layer[0],-1,128);
+    
   }
   else if (strcmp(szTokens[0], "brush") == 0) //brush change (attr)
   {
