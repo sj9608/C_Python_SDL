@@ -291,7 +291,8 @@ int main(int argc, char *argv[])
 
                 else if (strcmp(_event.user.data1, "new") == 0)
                 {
-
+                    memset(g_worldMap_Layer_1, -1, 128);
+                    memset(g_attrMMap_Layer_1, 0, 128);
                 }
             }
             break;
