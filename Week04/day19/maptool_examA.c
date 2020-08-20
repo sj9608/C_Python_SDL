@@ -5,24 +5,23 @@
 tDE_S_Core *g_pEngineCore;
 SDL_Texture *g_pTileSet;
 Sint16 g_worldMap_Layer_1[64];
-Sint16 g_attrMap_Layer_1[64]; // 속성 맵
+Sint16 g_attrMMap_Layer_1[64];
 Uint16 g_nSelectTileIndex = 0;
 
-SDL_Rect g_rtTilePalette = {440, 0, 160, 350}; // 팔레트 영역 전역으로 선언
-SDL_Rect g_rtWroldMap = {0, 0, 256, 256};      // 월드맵그리는 영역 전역으로
+SDL_Rect g_rtTilePalette = {440, 0, 160, 350};
+SDL_Rect g_rtWordMap = {0, 0, 256, 256};
 
-SDL_bool g_bDrawGrid = SDL_TRUE; // 그리드모드 일 때는 속성편집 가능, 아닐때는 타일 찍을 수 있도록 기능구현 버튼 다운에 넣을예정
-SDL_bool g_nCurrentAttr = 0;     // 현재 속성 0으로 설정
+SDL_bool g_bDrawGrid = SDL_TRUE;
+Sint16 g_nCurrentAttr = 0;
 
 int main(int argc, char *argv[])
 {
-  //월드맵 초기화 기능 아래 memset 기능 사용해서 처리함
   // for (int i = 0; i < 64; i++)
   // {
   //   g_worldMap_Layer_1[i] = -1;
   // }
-  memset(g_worldMap_Layer_1, -1, sizeof(Sint16) * 64); // 월드맵 초기화
-  memset(g_attrMap_Layer_1, 0, sizeof(Sint16) * 64);   // 속성맵 초기화
+  memset(g_worldMap_Layer_1, -1, sizeof(Sint16) * 64);
+  memset(g_attrMMap_Layer_1, 0, sizeof(Sint16) * 64);
 
   setup_cmd_parser(g_worldMap_Layer_1);
   g_pEngineCore = tDE_setup_1("maptool", 640, 480, 0);
@@ -42,13 +41,11 @@ int main(int argc, char *argv[])
     {
       //팔래트 랜디링
       SDL_SetRenderDrawColor(pRender, 0xff, 0xff, 0xff, 0xff);
-      // 팔레트 영역 선언한 부분 전역으로 올림
       // SDL_Rect _rtTemp;
       // _rtTemp.x = 440;
       // _rtTemp.y = 0;
       // _rtTemp.w = 160;
       // _rtTemp.h = 350;
-
       SDL_RenderDrawRect(pRender, &g_rtTilePalette);
 
       SDL_Rect _dstRt = {440, 100, 80 * 2, 80 * 2};
@@ -58,16 +55,13 @@ int main(int argc, char *argv[])
     //render world map
     {
       SDL_SetRenderDrawColor(pRender, 0xff, 0xff, 0xff, 0xff);
-      // 월드맵 영역 선언한 부분 전역으로 올림
       // SDL_Rect _rtTemp;
       // _rtTemp.x = 0;
       // _rtTemp.y = 0;
       // _rtTemp.w = 256;
       // _rtTemp.h = 256;
+      SDL_RenderDrawRect(pRender, &g_rtWordMap);
 
-      SDL_RenderDrawRect(pRender, &g_rtWroldMap);
-
-      // _index = -1 열린블럭
       for (int i = 0; i < 64; i++)
       {
         Sint16 _index = g_worldMap_Layer_1[i];
@@ -77,32 +71,24 @@ int main(int argc, char *argv[])
         }
       }
 
-      // 막힌 블럭 구현 attr
       for (int i = 0; i < 64; i++)
       {
-        Sint16 _index = g_attrMap_Layer_1[i];
+        SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_BLEND);
+        Sint16 _index = g_attrMMap_Layer_1[i];
         if (_index == 1)
         {
-          SDL_SetRenderDrawBlendMode(pRender,SDL_BLENDMODE_BLEND); // 반투명 모드 설정
           SDL_SetRenderDrawColor(pRender, 0xff, 0xff, 0xff, 0x80);
           SDL_Rect _rt = {(i % 8) * 32, (i / 8) * 32, 32, 32};
           SDL_RenderFillRect(pRender, &_rt);
-          SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_NONE); // 반투명 모드 끄기 (오버헤드 많이나서 꺼줘야함)
         }
-      }
-
-      // 문 속성 구현 attr 인덱스 2번
-      for (int i = 0; i < 64; i++)
-      {
-        Sint16 _index = g_attrMap_Layer_1[i];
-        if (_index == 2 )
+        else if (_index == 2)
         {
-          SDL_SetRenderDrawBlendMode(pRender,SDL_BLENDMODE_BLEND); // 반투명 모드 설정
           SDL_SetRenderDrawColor(pRender, 0x00, 0xff, 0x00, 0x80);
           SDL_Rect _rt = {(i % 8) * 32, (i / 8) * 32, 32, 32};
           SDL_RenderFillRect(pRender, &_rt);
-          SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_NONE); // 반투명 모드 끄기 (오버헤드 많이나서 꺼줘야함)
         }
+
+        SDL_SetRenderDrawBlendMode(pRender, SDL_BLENDMODE_NONE);
       }
 
       //그리드 그리기
@@ -131,38 +117,38 @@ int main(int argc, char *argv[])
 
       switch (_event.type)
       {
-      case SDL_MOUSEMOTION: // 마우스 모션
+      case SDL_MOUSEMOTION:
       {
         SDL_Point m_pt = {_event.motion.x, _event.motion.y};
-
-        if (_event.button.button == 1) // 좌클릭
+        if (_event.button.button == 1)
         {
-
-          if (SDL_PointInRect(&m_pt, &g_rtWroldMap) && !g_bDrawGrid) // 그리드모드 안켜져있을때
+          if (SDL_PointInRect(&m_pt, &g_rtWordMap) && !g_bDrawGrid)
           {
             putMap(m_pt.x / 32, m_pt.y / 32, g_nSelectTileIndex, g_worldMap_Layer_1, 8);
           }
         }
-        else if (_event.button.button == 4 && !g_bDrawGrid) // 우클릭 + 드래그 그리드모드 안켜져있을때
-          if (SDL_PointInRect(&m_pt, &g_rtWroldMap) == SDL_TRUE)
+        else if (_event.button.button == 4 && !g_bDrawGrid) //우 클릭
+        {
+          if (SDL_PointInRect(&m_pt, &g_rtWordMap))
           {
             putMap(m_pt.x / 32, m_pt.y / 32, -1, g_worldMap_Layer_1, 8);
           }
-
-        printf("%4d%4d\r", _event.motion.x, _event.motion.y);
+        }
+        // printf("%4d%4d%4d%4d\r",
+        //  _event.motion.x, _event.motion.y,
+        //  SDL_PointInRect(&m_pt, &g_rtWordMap),
+        //  _event.button.button
+        //  );
       }
       break;
-
-      case SDL_MOUSEBUTTONDOWN: // 마우스 클릭
+      case SDL_MOUSEBUTTONDOWN:
       {
-        // 현재 마우스 포인터 위치
         SDL_Point mousePt = {_event.motion.x, _event.motion.y};
         printf("%8d\r", _event.button.button);
+
         if (_event.button.button == 1) //마우스 좌클릭
         {
-
-          //팔래트처리
-          if (SDL_PointInRect(&mousePt, &g_rtTilePalette)) // 팔레트 영역구분처리 영역안에 있으면참
+          if (SDL_PointInRect(&mousePt, &g_rtTilePalette)) //팔래트처리
           {
             int _x = (_event.motion.x - 440) / 32;
             int _y = (_event.motion.y - 100) / 32;
@@ -172,37 +158,37 @@ int main(int argc, char *argv[])
               g_nSelectTileIndex = _y * 5 + _x;
             }
           }
-          //월드멥처리
-          else if (SDL_PointInRect(&mousePt, &g_rtWroldMap)) // 월드맵 영역구분처리
+          else if (SDL_PointInRect(&mousePt, &g_rtWordMap)) //월드멥처리
           {
             int _x = (_event.motion.x) / 32;
             int _y = (_event.motion.y) / 32;
 
-            if (g_bDrawGrid) // 그리드모드일때 속성값 받아옴
+            if (g_bDrawGrid) //속성 바꾸기
             {
-              // 현재속성을 마우스 클릭한 월드맵타일에 넣어줌
+              g_attrMMap_Layer_1[_x + _y * 8] = g_nCurrentAttr;
+
               printf("%3d,%3d,%3d,%3d\r", _x, _y,
-                     g_attrMap_Layer_1[_x + _y * 8],
-                     g_attrMap_Layer_1[_x + _y * 8]);
+                     g_attrMMap_Layer_1[_x + _y * 8],
+                     g_nCurrentAttr);
             }
-            else // 아니면 타일찍기
+            else
             {
               putMap(_x, _y, g_nSelectTileIndex, g_worldMap_Layer_1, 8);
             }
           }
         }
         else if (_event.button.button == 3) //마우스 우클릭
-          if (SDL_PointInRect(&mousePt, &g_rtWroldMap))
+        {
+          if (SDL_PointInRect(&mousePt, &g_rtWordMap))
           {
             int _x = (_event.motion.x) / 32;
             int _y = (_event.motion.y) / 32;
-            putMap(_x, _y, -1, g_worldMap_Layer_1, 8); // 지우개
+            putMap(_x, _y, -1, g_worldMap_Layer_1, 8); //지우게
           }
+        }
       }
       break;
-
-      case SDL_KEYDOWN: // 키보드입력
-
+      case SDL_KEYDOWN:
         //printf("%d \n", _event.key.keysym.scancode);
         {
           switch (nInputFSM)
@@ -217,6 +203,18 @@ int main(int argc, char *argv[])
             else if (_event.key.keysym.sym == SDLK_g)
             {
               g_bDrawGrid = !g_bDrawGrid;
+            }
+            else if (_event.key.keysym.sym == SDLK_1)
+            {
+              parseCmd("brush change 1");
+            }
+            else if (_event.key.keysym.sym == SDLK_2)
+            {
+              parseCmd("brush change 2");
+            }
+            else if (_event.key.keysym.sym == SDLK_0)
+            {
+              parseCmd("brush change 0");
             }
           }
           break;
@@ -261,7 +259,30 @@ int main(int argc, char *argv[])
         if (strcmp(_event.user.data1, "brush change") == 0)
         {
           g_nCurrentAttr = _event.user.code;
-          printf("change bursh %d \n", g_nCurrentAttr);
+          printf("change brush %d \n", g_nCurrentAttr);
+        }
+        else if (strcmp(_event.user.data1, "save") == 0)
+        {
+          char *pFileName = ((char *)_event.user.data1 + 16);
+          
+          SDL_RWops *rw = SDL_RWFromFile(pFileName, "wb");
+          SDL_RWwrite(rw, g_worldMap_Layer_1, sizeof(Uint16), 64);
+          SDL_RWwrite(rw, g_attrMMap_Layer_1, sizeof(Uint16), 64);
+          SDL_RWclose(rw);
+          
+          printf("save file name %s \n", pFileName);
+        }
+
+        else if (strcmp(_event.user.data1, "load") == 0)
+        {
+          char *pFileName = ((char *)_event.user.data1 + 16);
+          
+          SDL_RWops *rw = SDL_RWFromFile(pFileName, "rb");
+          SDL_RWread(rw, g_worldMap_Layer_1, sizeof(Uint16), 64);
+          SDL_RWread(rw, g_attrMMap_Layer_1, sizeof(Uint16), 64);
+          SDL_RWclose(rw);
+          
+          printf("load file name %s \n", pFileName);
         }
       }
       break;

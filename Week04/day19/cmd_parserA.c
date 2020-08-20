@@ -2,14 +2,16 @@
 
 #define MAX_TOKEN_SIZE 32
 
-// extern Sint16 g_worldMap_Layer_1[]; //전역으로 되어있어서 처리하기 힘듦
+// extern Sint16 g_worldMap_Layer_1[];
 
 Sint16 *g_worldMap_Layer[8];
 
-void setup_cmd_parser(Sint16 *pWorldMap)
+void setup_cmd_parser(Sint16 * pWordMap)
 {
-  g_worldMap_Layer[0] = pWorldMap;
+  g_worldMap_Layer[0] = pWordMap;
 }
+
+
 
 int doTokenize(char *szBuf, char (*szBufToken)[MAX_TOKEN_SIZE])
 {
@@ -63,36 +65,55 @@ void parseCmd(char *_szCmd)
   {
     //save file.map
     char *pFileName = szTokens[1];
-    SDL_RWops *rw = SDL_RWFromFile(pFileName, "wb");
-    SDL_RWwrite(rw, g_worldMap_Layer[0], sizeof(Uint16), 64);
-    SDL_RWclose(rw);
+    // SDL_RWops *rw = SDL_RWFromFile(pFileName, "wb");
+    // SDL_RWwrite(rw, g_worldMap_Layer[0], sizeof(Uint16), 64);
+    // SDL_RWclose(rw);
+
+    static char pMsg[32];
+    strcpy(pMsg,"save");
+    strcpy(pMsg+16,pFileName);
+    SDL_Event evt;
+    evt.type = SDL_USEREVENT;
+    evt.user.data1 = pMsg;
+    evt.user.timestamp = SDL_GetTicks();
+    SDL_PushEvent(&evt);
+
   }
   else if (strcmp(szTokens[0], "load") == 0)
   {
     char *pFileName = szTokens[1];
-    SDL_RWops *rw = SDL_RWFromFile(pFileName, "rb");
-    SDL_RWread(rw, g_worldMap_Layer[0], sizeof(Uint16), 64);
-    SDL_RWclose(rw);
+    // SDL_RWops *rw = SDL_RWFromFile(pFileName, "rb");
+    // SDL_RWread(rw, g_worldMap_Layer[0], sizeof(Uint16), 64);
+    // SDL_RWclose(rw);
+
+    static char pMsg[32];
+    strcpy(pMsg,"load");
+    strcpy(pMsg+16,pFileName);
+    SDL_Event evt;
+    evt.type = SDL_USEREVENT;
+    evt.user.data1 = pMsg;
+    evt.user.timestamp = SDL_GetTicks();
+    SDL_PushEvent(&evt);
+
   }
   else if (strcmp(szTokens[0], "new") == 0)
   {
     memset(g_worldMap_Layer[0],-1,128);
   }
-  else if (strcmp(szTokens[0], "brush") == 0) // syntax : brush change (attr)
+  else if (strcmp(szTokens[0], "brush") == 0) //brush change (attr)
   {
-    if(strcmp(szTokens[1], "change") == 0)
+    if(strcmp(szTokens[1],"change") == 0)
     {
       static char *pMsg = "brush change";
       int attr = atoi(szTokens[2]);
-      //extern으로 g_ncurrentAttr 변경 해줄 수 있지만 조금 더 독립적으로 만들기 위해서 아래방식을 사용함
+
       SDL_Event evt;
-      evt.type = SDL_USEREVENT; // 사용자 정의 이벤트 구현
+      evt.type = SDL_USEREVENT;
       evt.user.data1 = pMsg;
       evt.user.code = attr;
       evt.user.timestamp = SDL_GetTicks();
 
       SDL_PushEvent(&evt);
-
     }
   }
 }
