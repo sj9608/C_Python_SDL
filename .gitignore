@@ -4,6 +4,9 @@
 # Folder #
 c_lecture/
 out/
+Debug/
+Release/
+.vs/
 
 ### C ###
 # Prerequisites
