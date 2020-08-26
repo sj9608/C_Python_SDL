@@ -6,3 +6,6 @@
 import 모듈이름 as 별칭
 ```
 
+PIL (python image library)
+
+ex15.py  PIL 라이브러리 이용 이미지 컨트롤 예시 (참고)
