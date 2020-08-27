@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <winsock.h>
+#include <WS2tcpip.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -22,7 +23,10 @@ int main()
 	// 접속할 서버 주소 구조체 만들기
 	addrServer.sin_family = AF_INET;
 	addrServer.sin_port = htonl(8282);
-	addrServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+	//addrServer.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); --> 보안 에러 일어남
+	
+	InetPton(AF_INET, L"127.0.0.1", &addrServer.sin_addr.S_un.S_addr);
+
 
 	// 서버에 접속 소켓 객체에 
 	printf("connecting server ...\n");

@@ -94,7 +94,8 @@ _f.close()
 # 이름 출력 추가하기전에 해줘야 하는작업
 
 _str =_nodes[0].attrib['name']
-_tmp = f'{_str:32}'
+_tmp = f'{_str:32}' # 파일 이름 32바이트 공간 패킹 
+# 만약 이름이 7바이트 일 경우 나머지 25 바이트 ''으로 초기화 
 print(_tmp)
 bytes(_tmp,'utf-8')
 
