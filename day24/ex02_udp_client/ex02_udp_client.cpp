@@ -48,7 +48,7 @@ int main()
 
     //주소 초기화 
     memset(&si_other, 0, sizeof(si_other));
-    InetPton(AF_INET, L"192.168.0.9", &si_other.sin_addr.s_addr);
+    InetPton(AF_INET, L"192.168.0.4", &si_other.sin_addr.s_addr);
     si_other.sin_family = AF_INET;
     si_other.sin_port = htons(8284);
 

@@ -19,7 +19,7 @@ def packet_process() :
         print("wait request...")
 
         _data, _rinfo = udp_socket.recvfrom(1024)
-        _packet = unpack("BBHH", _data)
+        _packet = unpack("BBhh", _data)
         # byte, byte, short, float  4byte 단위로 끊어주는게 좋다 ( 1,1,2,(4),  4)
         # c로 변환할때 4바이트 3바이트 이런식이면 마지막 바이트에 0이 추가되는 경우가 있다.
 
