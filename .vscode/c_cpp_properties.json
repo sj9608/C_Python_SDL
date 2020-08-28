@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/MinGW/include/**"
+                "C:/MinGW/include/**",
+                "C:/Users/sneak7581/Anaconda3/include/**"
             ],
             "defines": [
                 "_DEBUG",
