@@ -1,4 +1,1 @@
-# TODO list
-
-day05 ex03 printf( ) 함수 에러 설명\
-
+# C언어와 SDL을 이용한 2D 도트맵 제작 엔진 개발
